@@ -33,7 +33,7 @@
                             )
                             ->join('users as u', 'u.id', 'p.user_id')
                             ->when($status !== 'all', function ($q) use ($explodeStatus) {
-                                return $q->whereIn('n.status', $explodeStatus);
+                                return $q->whereIn('p.status', $explodeStatus);
                             })
                             ->get();
 
