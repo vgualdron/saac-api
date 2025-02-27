@@ -53,7 +53,7 @@
                     return response()->json([
                         'message' => [
                             [
-                                'text' => 'No hay usuarios para mostrar',
+                                'text' => 'No hay registros',
                                 'detail' => 'Aun no ha registrado ningun registro'
                             ]
                         ]
