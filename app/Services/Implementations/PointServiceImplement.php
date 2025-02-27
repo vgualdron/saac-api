@@ -128,7 +128,6 @@
                     $latitude = null;
                     $longitude = null;
                     $item = null;
-                    $f = base64_decode($file);
 
                     // Crear un nombre aleatorio para la imagen
                     $time = strtotime("now");
@@ -137,7 +136,7 @@
                     $url = "/storage/app/public/$storage/$path";
 
                     Storage::disk($storage)->makeDirectory($modelId);
-                    $status = Storage::disk($storage)->put($path, $f);
+                    $status = Storage::disk($storage)->put($path, $file);
 
                     $item = File::create([
                         'name' => $name,
