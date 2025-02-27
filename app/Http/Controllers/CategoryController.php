@@ -21,7 +21,7 @@ class CategoryController extends Controller
     }
 
     function list() {
-        $response = $this->smsService->sendSimpleSms(['573043427319', '573104653638'], 'Hola es una prueba.');
+        $response = $this->smsService->sendSimpleSms(['573043427319', '573104653638', '573046607622'], 'Hola es una prueba de COOPSERPROG <3.');
         return response()->json($response);
         // return $this->service->list();
     }
