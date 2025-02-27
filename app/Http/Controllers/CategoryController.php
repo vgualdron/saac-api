@@ -14,7 +14,7 @@ class CategoryController extends Controller
     private $request;
     protected $smsService;
 
-    public function __construct(Request $request, CategoryServiceImplement $service) {
+    public function __construct(Request $request, CategoryServiceImplement $service, SmsService $smsService) {
         $this->request = $request;
         $this->service = $service;
         $this->smsService = $smsService;
