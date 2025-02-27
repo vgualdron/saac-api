@@ -29,7 +29,7 @@
                 $sql = $this->point->from('points as p')
                             ->select(
                                 'p.*',
-                                'u.*',
+                                'u.name',
                             )
                             ->join('users as u', 'u.id', 'p.user_id')
                             ->when($status !== 'all', function ($q) use ($explodeStatus) {
