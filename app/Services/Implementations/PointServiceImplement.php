@@ -45,20 +45,10 @@
                             })
                             ->get();
 
-                if (count($sql) > 0){
-                    return response()->json([
-                        'data' => $sql
-                    ], Response::HTTP_OK);
-                } else {
-                    return response()->json([
-                        'message' => [
-                            [
-                                'text' => 'No hay registros',
-                                'detail' => 'Aun no ha registrado ningun registro'
-                            ]
-                        ]
-                    ], Response::HTTP_NOT_FOUND);
-                }
+                return response()->json([
+                    'data' => $sql
+                ], Response::HTTP_OK);
+
             } catch (\Throwable $e) {
                 return response()->json([
                     'message' => [
