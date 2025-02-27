@@ -26,7 +26,7 @@ class SmsService
             'Authorization' => $authHeader,
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-        ])->post($this->apiUrl, [
+        ])->post($this->apiUrl . '/sms/1/text/single', [
             'from' => $this->from,
             'to' => is_array($to) ? $to : [$to],
             'text' => $text,
