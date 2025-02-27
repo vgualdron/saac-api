@@ -179,34 +179,17 @@
 
         function update(array $point, int $id){
             try {
-                $sql = $this->point::find($id);
-                if(!empty($sql)) {
-                    DB::transaction(function () use ($sql, $point) {
-                        $sql->amount = $point['amount'];
-                        $sql->status = $point['status'];
-                        $sql->observation = $point['observation'];
-                        $sql->description = $point['description'];
-                        $sql->user_id = $point['user_id'];
-                        $sql->save();
-                    });
-                    return response()->json([
-                        'message' => [
-                            [
-                                'text' => 'Actualizado con éxito',
-                                'detail' => null
-                            ]
+                $sql = $this->point::find($id)->update($point);
+
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Actualizado con éxito',
+                            'detail' => null
                         ]
-                    ], Response::HTTP_OK);
-                } else {
-                    return response()->json([
-                        'message' => [
-                            [
-                                'text' => 'Advertencia al actualizar',
-                                'detail' => 'El registro no existe'
-                            ]
-                        ]
-                    ], Response::HTTP_NOT_FOUND);
-                }
+                    ]
+                ], Response::HTTP_OK);
+
             } catch (\Throwable $e) {
                 return response()->json([
                     'message' => [
