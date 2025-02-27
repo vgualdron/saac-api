@@ -30,8 +30,10 @@
                             ->select(
                                 'p.*',
                                 'u.name',
+                                's.shop_name',
                             )
                             ->join('users as u', 'u.id', 'p.user_id')
+                            ->join('shops as s', 's.id', 'p.shop_id')
                             ->when($status !== 'all', function ($q) use ($explodeStatus) {
                                 return $q->whereIn('p.status', $explodeStatus);
                             })
