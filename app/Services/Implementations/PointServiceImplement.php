@@ -30,10 +30,16 @@
                             ->select(
                                 'p.*',
                                 'u.name',
-                                's.shop_name',
+                                's.name as shop_name',
+                                'f.url as file_url',
                             )
                             ->join('users as u', 'u.id', 'p.user_id')
                             ->join('shops as s', 's.id', 'p.shop_id')
+                            ->leftJoin('files as f', function ($join) {
+                                $join->on('f.model_id', '=', 'p.id')
+                                     ->where('f.model_name', '=', 'points')
+                                     ->where('f.name', '=', 'FOTO_PUNTOS');
+                            })
                             ->when($status !== 'all', function ($q) use ($explodeStatus) {
                                 return $q->whereIn('p.status', $explodeStatus);
                             })
