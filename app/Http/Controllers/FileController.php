@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class FileController extends Controller
 {
@@ -92,6 +93,32 @@ class FileController extends Controller
             'data' => $item,
         ], Response::HTTP_OK);
 
+    }
+
+    public function listStatusesToday(Request $request)
+    {
+        try {
+            $userSesion = $request->user();
+            $idUserSesion = $userSesion->id;
+            $name = "FILE_STATUSE";
+            $modelName = "statuses";
+            $date = Carbon::now()->subDay(); // Hace 24 horas
+            $items = File::where('name', $name)
+                ->where('model_name', $modelName)
+                ->where('registered_date', '>=', $date) // Filtra los últimos 24 horas
+                ->get();
+
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => [],
+                'message'=>$e->getMessage()
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'data' => $items,
+            'message' => 'Succeed'
+        ], JsonResponse::HTTP_OK);
     }
 
     public function get(Request $request)
