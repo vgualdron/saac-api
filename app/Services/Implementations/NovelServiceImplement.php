@@ -108,12 +108,6 @@
 
         function update(array $novel, int $id){
             try {
-                /* $validation = $this->validate($this->validator, $novel, $id, 'actualizar', 'nuevo', null);
-                if ($validation['success'] === false) {
-                    return response()->json([
-                        'message' => $validation['message']
-                    ], Response::HTTP_BAD_REQUEST);
-                } */
                 $sql = $this->novel::find($id);
                 if(!empty($sql)) {
                     DB::transaction(function () use ($sql, $novel) {
@@ -123,60 +117,6 @@
                         $sql->address = $novel['address'];
                         $sql->sector = $novel['sector'];
                         $sql->status = $novel['status'];
-                        $sql->district = $novel['district'];
-                        $sql->occupation = $novel['occupation'];
-                        $sql->observation = $novel['observation'];
-                        $sql->user_send = $novel['userSend'] ? $novel['userSend'] : null;
-                        $sql->save();
-                    });
-                    return response()->json([
-                        'message' => [
-                            [
-                                'text' => 'Actualizado con éxito',
-                                'detail' => null
-                            ]
-                        ]
-                    ], Response::HTTP_OK);
-                } else {
-                    return response()->json([
-                        'message' => [
-                            [
-                                'text' => 'Advertencia al actualizar',
-                                'detail' => 'El registro no existe'
-                            ]
-                        ]
-                    ], Response::HTTP_NOT_FOUND);
-                }
-            } catch (\Throwable $e) {
-                return response()->json([
-                    'message' => [
-                        [
-                            'text' => 'Advertencia al actualizar',
-                            'detail' => $e->getMessage()
-                        ]
-                    ]
-                ], Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        function updateStatus(array $novel, int $id){
-            try {
-                /* $validation = $this->validate($this->validator, $novel, $id, 'actualizar', 'nuevo', null);
-                if ($validation['success'] === false) {
-                    return response()->json([
-                        'message' => $validation['message']
-                    ], Response::HTTP_BAD_REQUEST);
-                } */
-                $sql = $this->novel::find($id);
-                if(!empty($sql)) {
-                     DB::transaction(function () use ($sql, $novel) {
-                        // $sql->document_number = $novel['documentNumber'];
-                        $sql->name = $novel['name'];
-                        $sql->phone = $novel['phone'];
-                        $sql->address = $novel['address'];
-                        $sql->sector = $novel['sector'];
-                        $sql->status = $novel['status'];
-                        $sql->attempts = $novel['attempts'];
                         $sql->district = $novel['district'];
                         $sql->occupation = $novel['occupation'];
                         $sql->observation = $novel['observation'];
