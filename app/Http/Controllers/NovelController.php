@@ -57,4 +57,28 @@ class NovelController extends Controller
     function getByPhone(string $phone){
         return $this->service->getByPhone($phone);
     }
+
+    function getNewsMigrate(int $id) {
+
+        try {
+            $items = DB::table('saacccgq_dbsaac.asociados')
+                ->whereNotExists(function ($query) {
+                    $query->select(DB::raw(1))
+                        ->from('saacccgq_mobile_database.users')
+                        ->whereColumn('saacccgq_mobile_database.users.document_number', 'saacccgq_dbsaac.asociados.cedula');
+                })
+            ->get();
+
+            return response()->json([
+                'data' => $items,
+                'message' => 'Succeed'
+            ], JsonResponse::HTTP_OK);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => [],
+                'message'=>$e->getMessage()
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
