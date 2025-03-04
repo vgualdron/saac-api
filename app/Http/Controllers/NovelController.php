@@ -58,7 +58,7 @@ class NovelController extends Controller
         return $this->service->getByPhone($phone);
     }
 
-    function getNewsMigrate(int $id) {
+    function getNewsMigrate() {
 
         try {
             $items = DB::table('saacccgq_dbsaac.asociados')
