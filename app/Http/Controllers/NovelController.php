@@ -6,6 +6,7 @@ use App\Models\Novel;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\Implementations\NovelServiceImplement;
+use Illuminate\Support\Facades\DB;
 
 class NovelController extends Controller
 {
