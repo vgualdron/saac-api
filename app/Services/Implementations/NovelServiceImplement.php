@@ -31,6 +31,7 @@
                     ->select(
                         'n.*',
                         'u.id as user_id',
+                        'u.completedFields as user_completed_fields',
                     )
                     ->leftJoin('users as u', 'u.document_number', 'n.document_number')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
