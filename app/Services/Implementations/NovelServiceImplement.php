@@ -30,7 +30,9 @@
                 $sql = $this->novel->from('news as n')
                     ->select(
                         'n.*',
+                        'u.id as user_id',
                     )
+                    ->leftJoin('users as u', 'u.document_number', 'n.document_number')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('n.status', $explodeStatus);
                     })
