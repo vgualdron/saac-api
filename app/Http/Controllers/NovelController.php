@@ -81,7 +81,7 @@ class NovelController extends Controller
                     'type_document'   => $associate->tipo_documento,  // Tipo de documento
                     'document_number' => $associate->cedula,          // Número de documento
                     'name'            => $fullName,                   // Nombre completo
-                    'phone'           => $associate->celular,         // Celular
+                    'phone'           => $associate->celular ?? 'NONE', // Celular
                     'password'        => Hash::make($associate->cedula), // Hash de la cédula
                     'completedFields' => true                         // Campo completado
                 ];
