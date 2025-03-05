@@ -63,11 +63,11 @@ class NovelController extends Controller
         try {
             DB::beginTransaction(); // Inicia la transacción
 
-            $associates = DB::table('saacccgq_dbsaac.associates')
+            $associates = DB::table('saacccgq_dbsaac.asociados')
                 ->whereNotExists(function ($query) {
                     $query->select(DB::raw(1))
                         ->from('saacccgq_mobile_database.users')
-                        ->whereColumn('saacccgq_mobile_database.users.document_number', 'saacccgq_dbsaac.associates.id_number');
+                        ->whereColumn('saacccgq_mobile_database.users.document_number', 'saacccgq_dbsaac.asociados.id_number');
                 })
                 ->get();
 
