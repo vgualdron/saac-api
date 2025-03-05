@@ -128,6 +128,9 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/category"], function ()
 Route::group(['middleware' => 'auth:api' , "prefix" => "/shop"], function () {
     Route::get('/', [ShopController::class, 'list'])->name('shop.list');
     Route::get('/by-status/{status}', [ShopController::class, 'listByStatus'])->name('shop.listByStatus');
+    Route::post('/', [ShopController::class, 'create'])->name('shop.create');
+    Route::put('/{id}', [ShopController::class, 'update'])->name('shop.update');
+    Route::delete('/{id}', [ShopController::class, 'delete'])->name('shop.delete');
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/pqr"], function () {

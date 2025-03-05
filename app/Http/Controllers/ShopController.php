@@ -23,4 +23,20 @@ class ShopController extends Controller
     function listByStatus(string $status){
         return $this->service->listByStatus($status);
     }
+
+    function create(){
+        $data = $this->request->all();
+        $userSesion = $this->request->user();
+        $idUserSesion = $userSesion->id;
+        $data["registered_by"] = $idUserSesion;
+        return $this->service->create($data);
+    }
+
+    function update(int $id){
+        return $this->service->update($this->request->all(), $id);
+    }
+
+    function delete(int $id){
+        return $this->service->delete($id);
+    }
 }
