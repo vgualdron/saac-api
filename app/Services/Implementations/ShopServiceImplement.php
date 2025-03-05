@@ -60,6 +60,7 @@
 
         function listByStatus(string $status) {
             try {
+                $explodeStatus = explode(',', $status);
                 $sql = $this->shop->from('shops as s')
                     ->select(
                         's.*',
@@ -72,7 +73,9 @@
                              ->on('fa.model_id', '=', 's.id')
                              ->where('fa.name', '=', 'LOGO_SHOP');
                     })
-                    ->where('s.status', $status)
+                    ->when($status !== 'all', function ($q) use ($explodeStatus) {
+                        return $q->whereIn('s.status', $explodeStatus);
+                    })
                     ->orderBy('s.order', 'ASC')
                     ->get();
 
