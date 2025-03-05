@@ -4,6 +4,6 @@
     interface ShopServiceInterface
     {
         function list();
-        function listBySatus(string $status);
+        function listByStatus(string $status);
     }
 ?>
