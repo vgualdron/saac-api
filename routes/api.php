@@ -127,6 +127,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/category"], function ()
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/shop"], function () {
     Route::get('/', [ShopController::class, 'list'])->name('shop.list');
+    Route::get('/by-status/{status}', [ShopController::class, 'listByStatus'])->name('shop.listByStatus');
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/pqr"], function () {

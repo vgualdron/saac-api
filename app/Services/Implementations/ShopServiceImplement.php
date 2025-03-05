@@ -57,5 +57,44 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
+
+        function listByStatus(string $status) {
+            try {
+                $sql = $this->shop->from('shops as s')
+                    ->select(
+                        's.*',
+                        'c.name as category_name',
+                        'fa.url as url_logo',
+                    )
+                    ->join('categories as c', 'c.id', 's.category_id')
+                    ->leftJoin('files as fa', function($join) {
+                        $join->where('fa.model_name', '=', 'shops')
+                             ->on('fa.model_id', '=', 's.id')
+                             ->where('fa.name', '=', 'LOGO_SHOP');
+                    })
+                    ->where('s.status', $status)
+                    ->orderBy('s.order', 'ASC')
+                    ->get();
+
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'data' => []
+                    ], Response::HTTP_OK);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar los registros',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 ?>

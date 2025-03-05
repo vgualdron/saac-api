@@ -4,5 +4,6 @@
     interface ShopServiceInterface
     {
         function list();
+        function listBySatus(string $status);
     }
 ?>
