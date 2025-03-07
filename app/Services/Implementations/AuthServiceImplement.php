@@ -152,6 +152,7 @@
                                     $userData["update_photo"] = $userObject->updatePhoto;
                                     $userData["update_password"] = $userObject->updatePassword;
                                     $userData["completed_fields"] = $userObject->completedFields;
+                                    $userData["date_payment"] = $userObject->date_payment;
                                 }
 
                                 $rolesArray = User::from('users as u')
