@@ -38,6 +38,7 @@ class User extends Authenticatable
         'changePaswword',
         'changePhoto',
         'completedFields',
+        'date_payment',
     ];
 
     /**
