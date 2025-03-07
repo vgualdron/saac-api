@@ -84,7 +84,7 @@ class NovelController extends Controller
                     'phone'           => $associate->celular ?? 'NONE', // Celular
                     'password'        => Hash::make($associate->cedula), // Hash de la cédula
                     'completedFields' => true,                         // Campo completado
-                    'date_payment' => date('Y-m-d H:i:s')
+                    'payment_date' => date('Y-m-d H:i:s')
                 ];
 
                 // Insertar usuario en la BD
