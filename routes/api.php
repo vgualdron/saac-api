@@ -92,6 +92,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/new"], function () {
     Route::get('/get-by-phone/{phone}', [NovelController::class, 'getByPhone'])->name('new.getByPhone');
 });
 
+Route::get('/download-file-from-url', [FileController::class, 'downloadFileFromUrl'])->name('file.downloadFileFromUrl');
 Route::group(['middleware' => 'auth:api' , "prefix" => "/file"], function () {
     Route::post('/create', [FileController::class, 'create'])->name('file.create');
     Route::delete('/delete/{id}', [FileController::class, 'delete'])->name('file.delete');

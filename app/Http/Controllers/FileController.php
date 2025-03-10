@@ -181,4 +181,32 @@ class FileController extends Controller
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
+
+    public function downloadFileFromUrl(Request $request)
+    {
+        // Obtener el contenido de la imagen desde la URL
+        $fileUrl = $request->query('fileUrl');
+        $route = $request->query('route');
+        $type = $request->query('type');
+
+        // Validamos que la URL no esté vacía
+        if (!$fileUrl) {
+            return response()->json(['error' => 'URL del archivo no proporcionada'], 400);
+        }
+
+        $fileContent = file_get_contents($fileUrl);
+
+        // Verifica si se pudo obtener el contenido
+        if ($fileContent === false) {
+            return response()->json(['error' => 'No se pudo obtener el archivo'], 404);
+        }
+
+        // Extraer el nombre del archivo de la URL
+        $fileName = basename($fileUrl);
+
+        // Crear una respuesta de descarga con el contenido de la imagen
+        return response($imageContent, 200)
+            ->header('Content-Type', $type === 'video' ? 'video/mp4' : 'image/jpeg' )  // Ajusta el tipo de contenido según el tipo de imagen
+            ->header('Content-Disposition', 'attachment; filename="' . $route . ' - '. $type . ' - '. $fileName . '"');
+    }
 }
