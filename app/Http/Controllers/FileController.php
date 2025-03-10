@@ -185,7 +185,7 @@ class FileController extends Controller
     public function downloadFileFromUrl(Request $request)
     {
         // Obtener el contenido de la imagen desde la URL
-        $fileUrl = $request->query('fileUrl');
+        $fileUrl = $request->query('url');
         $route = $request->query('route');
         $type = $request->query('type');
         $extension = $request->query('extension');
