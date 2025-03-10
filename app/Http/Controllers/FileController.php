@@ -206,7 +206,7 @@ class FileController extends Controller
         $fileName = basename($fileUrl);
 
         // Crear una respuesta de descarga con el contenido de la imagen
-        return response($imageContent, 200)
+        return response($fileContent, 200)
             ->header('Content-Type', $type . '/' . $extension )  // Ajusta el tipo de contenido según el tipo de imagen
             ->header('Content-Disposition', 'attachment; filename="' . $type . ' - '. $fileName . '"');
     }
