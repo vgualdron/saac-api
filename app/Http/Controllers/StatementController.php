@@ -11,14 +11,22 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Asociado;
 use App\Models\MovimientoCobro;
 use App\Models\MovimientoRecaudo;
+use App\Services\SmsService;
 
 class StatementController extends Controller
 {
+    protected $smsService;
+
+    public function __construct(SmsService $smsService) {
+        $this->smsService = $smsService;
+    }
+
     /**
      * Obtiene cobros y recaudos pendientes y realizados de un asociado específico.
      */
     public function get(string $document)
     {
+        $response = $this->smsService->sendSimpleSms(['573043427319', '573104653638', '573046607622'], 'Alguna persona está revisando el estado de cuenta.');
         $asociadoId = null;
         $asociado = Asociado::where('cedula', $document)->first();
         // dd($asociado);
