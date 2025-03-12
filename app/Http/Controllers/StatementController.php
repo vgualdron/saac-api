@@ -28,7 +28,7 @@ class StatementController extends Controller
      */
     public function get(string $document)
     {
-        $response = $this->smsService->sendSimpleSms(['573043427319', '573104653638', '573046607622'], 'Alguna persona está revisando el estado de cuenta.');
+        $response = $this->smsService->sendSimpleSms(['573043427319'], 'Alguna persona está revisando el estado de cuenta.');
         $asociadoId = null;
         $asociado = Asociado::where('cedula', $document)->first();
         // dd($asociado);
