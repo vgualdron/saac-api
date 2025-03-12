@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Asociado;
 use App\Models\MovimientoCobro;
 use App\Models\MovimientoRecaudo;
+use App\Models\MovimientoCredito;
 use App\Services\SmsService;
 
 class StatementController extends Controller
