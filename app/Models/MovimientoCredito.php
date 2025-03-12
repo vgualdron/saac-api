@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class MovimientoCredito extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'movimiento_creditos';
-    
+    protected $connection = 'mysql_secondary';
+
     protected $fillable = [
         'fecha_corte',
         'credito_id',
@@ -24,7 +25,7 @@ class MovimientoCredito extends Model
         'valor_saldo',
         'estado_cuota',
     ];
-    
+
     /**
      * Obtiene el encabezado del crédito.
      */
