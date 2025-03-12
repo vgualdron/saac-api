@@ -33,24 +33,21 @@ class StatementController extends Controller
         if ($asociado) {
             $asociadoId = $asociado->id;
         }
-        //dd($asociadoId);
 
         // Obtener aportes realizados donde lineaaporte_id no sea nula
         $aportes_realizados = MovimientoRecaudo::join('recaudos', 'movimiento_recaudos.recaudo_id', '=', 'recaudos.id')
-            ->join('periodos', 'recaudos.periodo_id', '=', 'periodos.id') // Suponiendo que hay un campo periodo_id en recaudos
-            ->join('lineaaportes', 'movimiento_recaudos.lineaaporte_id', '=', 'lineaaportes.id') // Unir con lineaaportes
-            ->where('recaudos.asociado_id', $asociadoId)  // Usa asociado_id de la tabla recaudos
-            ->whereNotNull('movimiento_recaudos.lineaaporte_id')  // Filtrar solo cuando lineaaporte_id no sea nula
-            ->whereNotNull('movimiento_recaudos.valor_aporte')
-            ->where('movimiento_recaudos.valor_aporte', '>', 0)
-            ->where('movimiento_recaudos.valor_cuota_credito', '=', 0)
+            ->join('periodos', 'recaudos.periodo_id', '=', 'periodos.id')
+            ->join('lineaaportes', 'movimiento_recaudos.lineaaporte_id', '=', 'lineaaportes.id')
+            ->where('recaudos.asociado_id', $asociadoId)
             ->select(
                 'movimiento_recaudos.*',
                 'recaudos.fecha_recaudo',
                 'periodos.nombre as periodo_nombre',
                 'lineaaportes.nombre as linea_aporte_nombre'
-                ) // Selecciona los campos necesarios
+            )
+            ->orderBy('recaudos.fecha_recaudo', 'asc')
             ->get();
+
         //dd($aportes_realizados);
 
         // Obtener aportes pendientes
@@ -82,7 +79,9 @@ class StatementController extends Controller
                 'recaudos.fecha_recaudo',  // Incluir la fecha de recaudo desde la tabla recaudos
                 'periodos.nombre as periodo_nombre',  // Incluir el nombre del periodo desde la tabla periodos
                 'lineacreditos.nombre as linea_credito_nombre'  // Incluir el nombre de la línea de crédito desde lineacreditos
-                )
+            )
+            ->orderBy('credito_id', 'asc')
+            ->orderBy(DB::raw('CAST(periodo_id AS UNSIGNED)'), 'asc')
             ->get();
         //dd($cuotas_credito_realizadas);
 
@@ -98,14 +97,31 @@ class StatementController extends Controller
                 'periodos.nombre as periodo_nombre', // El nombre del periodos
                 'lineacreditos.nombre as linea_credito_nombre' // El nombre de la línea de crédito desde lineacreditos
             )
+            ->orderBy('credito_id', 'asc')
             ->get();
-        //dd($cuotas_credito_pendientes);
+
+        // Obtener cuotas de crédito pendientes futuros
+        $cuotas_credito_pendientes_futuro = MovimientoCredito::join('creditos', 'movimiento_creditos.credito_id', '=', 'creditos.id')
+            ->join('lineacreditos', 'creditos.lineacredito_id', '=', 'lineacreditos.id')
+            ->where('creditos.asociado_id', $asociadoId)
+            ->where('creditos.estado', 'Aprobado')
+            ->where('movimiento_creditos.estado_cuota', 'Pendiente')
+            ->select(
+                'movimiento_creditos.*',
+                'lineacreditos.nombre as linea_credito_nombre'
+            )
+            ->orderBy('credito_id', 'asc')
+            ->orderBy(DB::raw('CAST(cuota AS UNSIGNED)'), 'asc')
+            ->get();
+
+        //dd($cuotas_credito_pendientes_futuro);
 
         return response()->json([
             'aportes_realizados' => $aportes_realizados,
             'aportes_pendientes' => $aportes_pendientes,
             'cuotas_credito_realizadas' => $cuotas_credito_realizadas,
-            'cuotas_credito_pendientes' => $cuotas_credito_pendientes
+            'cuotas_credito_pendientes' => $cuotas_credito_pendientes,
+            'cuotas_credito_pendientes_futuro' => $cuotas_credito_pendientes_futuro
         ]);
     }
 
