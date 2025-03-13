@@ -75,9 +75,8 @@
                     unset($novel['department_id']);
                     unset($novel['department_issue']);
 
-                    $sql = $this->novel::create($novel);
 
-                    $sql = User::create([
+                    $newUser = User::create([
                         'type_document' => $novel['type_document'],
                         'document_number' => $novel['document_number'],
                         'name' => $novel['name'] . ' ' . $novel['first_lastname'] . ' ' . $novel['second_lastname'],
@@ -86,14 +85,17 @@
                         'password' => empty($novel['password']) ? Hash::make($novel['document_number']) : Hash::make($novel['password'])
                     ]);
 
-                    $sql->assignRole(['Asociado']);
+                    $newUser->assignRole(['Asociado']);
+
+                    $novel["user_id"] = $newUser->id;
+                    $newNovel = $this->novel::create($novel);
 
                 });
                 return response()->json([
                     'message' => [
                         [
                             'text' => 'Registrado con exito',
-                            'detail' => null
+                            'detail' => $newNovel
                         ]
                     ]
                 ], Response::HTTP_OK);
