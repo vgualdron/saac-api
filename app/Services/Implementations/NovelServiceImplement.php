@@ -32,6 +32,7 @@
                         'n.*',
                         'u.id as user_id',
                         'u.completedFields as user_completed_fields',
+                        'u.payment_date as user_payment_date',
                     )
                     ->leftJoin('users as u', 'u.id', 'n.user_id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
