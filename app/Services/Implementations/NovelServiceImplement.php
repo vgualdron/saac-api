@@ -33,7 +33,7 @@
                         'u.id as user_id',
                         'u.completedFields as user_completed_fields',
                     )
-                    ->leftJoin('users as u', 'u.document_number', 'n.document_number')
+                    ->leftJoin('users as u', 'u.id', 'n.user_id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('n.status', $explodeStatus);
                     })
@@ -74,7 +74,6 @@
                     unset($novel['department_house']);
                     unset($novel['department_id']);
                     unset($novel['department_issue']);
-
 
                     $newUser = User::create([
                         'type_document' => $novel['type_document'],
