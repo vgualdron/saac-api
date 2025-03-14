@@ -17,6 +17,7 @@ class Novel extends Model
     protected $fillable = [
         'id',
         'user_id',
+        'voucher_id',
         'status',
         'document_number',
         'first_lastname',
