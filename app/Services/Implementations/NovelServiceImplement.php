@@ -162,7 +162,16 @@
             try {
                 $sql = $this->novel::find($id);
                 if(!empty($sql)) {
+                    $userId = $sql->user_id;
                     $sql->delete();
+
+                    if ($userId) {
+                        $user = User::find($userId);
+                        if ($user) {
+                            $user->delete();
+                        }
+                    }
+
                     return response()->json([
                         'message' => [
                             [
