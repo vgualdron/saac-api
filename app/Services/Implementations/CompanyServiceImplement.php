@@ -32,6 +32,7 @@
                         'e.email as email',
                         'e.estado as status',
                     )
+                    ->whereNotNull('e.nombre')
                     ->orderBy('e.nit', 'ASC')
                     ->get();
 
