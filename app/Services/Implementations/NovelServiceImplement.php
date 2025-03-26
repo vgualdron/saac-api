@@ -62,12 +62,20 @@
             }
         }
 
-        function create(array $novel){
+        function create(array $novel) {
             try {
                 $validation = $this->validate($this->validator, $novel, null, 'registrar', 'asociado', null);
                 if ($validation['success'] === false) {
                     return response()->json([
                         'message' => $validation['message']
+                    ], Response::HTTP_BAD_REQUEST);
+                }
+
+                if (User::where('document_number', $novel['document_number'])->exists()) {
+                    return response()->json([
+                        'message' => [
+                            ['text' => 'El número de documento ya está registrado como cuenta de asociado']
+                        ]
                     ], Response::HTTP_BAD_REQUEST);
                 }
 
@@ -370,6 +378,56 @@
                     'message' => [
                         [
                             'text' => 'Se ha presentado un error al buscar',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
+
+        function completeDataSaac(array $novel){
+            try {
+                $validation = $this->validate($this->validator, $novel, null, 'registrar', 'asociado', null);
+                if ($validation['success'] === false) {
+                    return response()->json([
+                        'message' => $validation['message']
+                    ], Response::HTTP_BAD_REQUEST);
+                }
+
+                DB::transaction(function () use ($novel) {
+                    unset($novel['department_house']);
+                    unset($novel['department_id']);
+                    unset($novel['department_issue']);
+
+                    $newUser = User::create([
+                        'type_document' => $novel['type_document'],
+                        'document_number' => $novel['document_number'],
+                        'name' => $novel['name'] . ' ' . $novel['first_lastname'] . ' ' . $novel['second_lastname'],
+                        'phone' => $novel['phone'],
+                        'active' => $novel['active'],
+                        'password' => empty($novel['password']) ? Hash::make($novel['document_number']) : Hash::make($novel['password'])
+                    ]);
+
+                    $newUser->assignRole(['Asociado']);
+
+                    $novel["user_id"] = $newUser->id;
+                    $newNovel = $this->novel::create($novel);
+
+                });
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Registrado con exito',
+                            'detail' => $newNovel
+                        ]
+                    ]
+                ], Response::HTTP_OK);
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Advertencia al registrar',
                             'detail' => $e->getMessage()
                         ]
                     ]
