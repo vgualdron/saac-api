@@ -64,6 +64,7 @@
 
         function create(array $novel) {
             try {
+                $newNovel = null;
                 $validation = $this->validate($this->validator, $novel, null, 'registrar', 'asociado', null);
                 if ($validation['success'] === false) {
                     return response()->json([
