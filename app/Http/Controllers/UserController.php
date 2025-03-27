@@ -10,7 +10,7 @@ class UserController extends Controller
     private $service;
     private $request;
 
-    public function __construct(Request $request, UserServiceImplement $service) { 
+    public function __construct(Request $request, UserServiceImplement $service) {
             $this->request = $request;
             $this->service = $service;
     }
@@ -18,7 +18,7 @@ class UserController extends Controller
     function list(int $displayAll){
         return $this->service->list($displayAll);
     }
-    
+
     function listByRoleName(int $displayAll, string $name, int $city){
         return $this->service->listByRoleName($displayAll, $name, $city);
     }
@@ -59,5 +59,22 @@ class UserController extends Controller
         $userSesion = $this->request->user();
         $idUserSesion = $userSesion->id;
         return $this->service->updateLocation($user, $idUserSesion);
+    }
+
+    function completeData(int $id) {
+
+        try {
+            $item = User::find($id)->update($this->request->all());
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => [],
+                'message'=>$e->getMessage()
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'data' => $item,
+            'message' => 'Succeed'
+        ], JsonResponse::HTTP_OK);
     }
 }

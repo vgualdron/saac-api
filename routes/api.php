@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/user"], function () {
     Route::put('/update-profile/{id}', [UserController::class, 'updateProfile'])->name('user.updateProfile');
     Route::put('/update-push-token', [UserController::class, 'updatePushToken'])->name('user.updatePushToken');
     Route::put('/update-location', [UserController::class, 'updateLocation'])->name('user.updateLocation');
+    Route::put('/complete-data/{id}', [UserController::class, 'completeData'])->name('user.completeData');
 });
 
 Route::get('/new/get-news-migrate', [NovelController::class, 'getNewsMigrate'])->name('user.getNewsMigrate');
