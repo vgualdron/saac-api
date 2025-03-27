@@ -33,7 +33,7 @@
                         'e.estado as status',
                     )
                     ->whereNotNull('e.nombre')
-                    ->orderBy('e.nit', 'ASC')
+                    ->orderBy('e.nombre', 'ASC')
                     ->get();
 
                 if (count($sql) > 0){
