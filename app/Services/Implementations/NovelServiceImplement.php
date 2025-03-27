@@ -386,36 +386,45 @@
             }
         }
 
-
         function completeDataSaac(array $novel){
             try {
-                $validation = $this->validate($this->validator, $novel, null, 'registrar', 'asociado', null);
-                if ($validation['success'] === false) {
-                    return response()->json([
-                        'message' => $validation['message']
-                    ], Response::HTTP_BAD_REQUEST);
+                // Excluir datos no necesarios para la tabla principal
+                $datosAsociado = $request->except(['economicas', 'activos', 'conocimientos', 'referencias', 'aportes']);
+
+                // Validar la solicitud
+                $this->validateRequest($request);
+
+                // Iniciar transacción
+                DB::beginTransaction();
+
+                // Crear el Asociado
+                $asociado = Asociado::create($datosAsociado);
+
+                // Guardar relaciones si existen en la solicitud
+                $relaciones = ['economicas', 'activos', 'conocimientos', 'referencias'];
+
+                foreach ($relaciones as $relacion) {
+                    if ($request->has($relacion) && !empty($request->$relacion)) {
+                        $asociado->$relacion()->create($request->$relacion);
+                    }
                 }
 
-                DB::transaction(function () use ($novel) {
-                    unset($novel['department_house']);
-                    unset($novel['department_id']);
-                    unset($novel['department_issue']);
+                // Guardar los aportes
+                if ($request->has('aportes')) {
+                    foreach ($request->aportes as $aporte) {
+                        if (!empty($aporte['valor_aporte']) && $aporte['valor_aporte'] > 0) {
+                            AsociadoAporte::create([
+                                'asociado_id' => $asociado->id,
+                                'lineaaporte_id' => $aporte['linea_aporte_id'],
+                                'valor_aporte' => $aporte['valor_aporte'],
+                            ]);
+                        }
+                    }
+                }
 
-                    $newUser = User::create([
-                        'type_document' => $novel['type_document'],
-                        'document_number' => $novel['document_number'],
-                        'name' => $novel['name'] . ' ' . $novel['first_lastname'] . ' ' . $novel['second_lastname'],
-                        'phone' => $novel['phone'],
-                        'active' => $novel['active'],
-                        'password' => empty($novel['password']) ? Hash::make($novel['document_number']) : Hash::make($novel['password'])
-                    ]);
+                // Confirmar la transacción
+                DB::commit();
 
-                    $newUser->assignRole(['Asociado']);
-
-                    $novel["user_id"] = $newUser->id;
-                    $newNovel = $this->novel::create($novel);
-
-                });
                 return response()->json([
                     'message' => [
                         [
@@ -425,10 +434,11 @@
                     ]
                 ], Response::HTTP_OK);
             } catch (\Throwable $e) {
+                DB::rollBack();
                 return response()->json([
                     'message' => [
                         [
-                            'text' => 'Advertencia al registrar',
+                            'text' => 'Error al registrar',
                             'detail' => $e->getMessage()
                         ]
                     ]
