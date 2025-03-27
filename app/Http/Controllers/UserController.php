@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use App\Services\Implementations\UserServiceImplement;
 
 class UserController extends Controller
@@ -76,6 +77,6 @@ class UserController extends Controller
         return response()->json([
             'data' => $item,
             'message' => 'Succeed'
-        ], JsonResponse::HTTP_OK);
+        ], Response::HTTP_OK);
     }
 }
