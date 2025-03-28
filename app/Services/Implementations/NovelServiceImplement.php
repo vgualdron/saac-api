@@ -427,7 +427,7 @@
                     'message' => [
                         [
                             'text' => 'Registrado con exito',
-                            'detail' => $newNovel
+                            'detail' => $novel
                         ]
                     ]
                 ], Response::HTTP_OK);
