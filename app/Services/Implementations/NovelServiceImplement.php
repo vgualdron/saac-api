@@ -4,7 +4,7 @@
     use Symfony\Component\HttpFoundation\Response;
     use App\Models\Novel;
     use App\Models\User;
-    use App\Models\Question;
+    use App\Models\Asociado;
     use App\Validator\{NovelValidator, ProfileValidator};
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
