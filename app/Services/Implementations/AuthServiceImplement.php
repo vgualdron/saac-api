@@ -138,12 +138,12 @@
                                     ->orderBy('u.id', 'ASC')
                                     ->first();
 
-                                $novelObject = Novel::from('saacccgq_mobile_database.news as n')
-                                    ->select(
+                                $novelObject = Novel::select(
                                         'n.*',
-                                        'muni_exp.departamento_id as dpto_exp',
+                                        'muni_exp.departamento_id as dpto_exp'
                                     )
-                                    ->join('saacccgq_dbsaac.municipios muni_exp', 'muni_exp.id', 'n.city_issue')
+                                    ->from('saacccgq_mobile_database.news as n')
+                                    ->join('saacccgq_dbsaac.municipios as muni_exp', 'muni_exp.id', '=', 'n.city_issue')
                                     ->where('n.user_id', $user->id)
                                     ->first();
 
