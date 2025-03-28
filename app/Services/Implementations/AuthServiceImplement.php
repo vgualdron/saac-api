@@ -143,7 +143,7 @@
                                         'n.*',
                                         'muni_exp.departamento_id as dptp_exp',
                                     )
-                                    ->join('saacccgq_dbsaac.minicipios muni_exp', 'muni_exp.id', 'n.city_issue')
+                                    ->join('saacccgq_dbsaac.municipios muni_exp', 'muni_exp.id', 'n.city_issue')
                                     ->where('n.user_id', $user->id)
                                     ->first();
 
