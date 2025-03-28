@@ -408,7 +408,7 @@
                 }
 
                 // Guardar los aportes
-                if ($novel['aportes']) {
+                if ($request->aportes) {
                     foreach ($request->aportes as $aporte) {
                         if (!empty($aporte['valor_aporte']) && $aporte['valor_aporte'] > 0) {
                             AsociadoAporte::create([
