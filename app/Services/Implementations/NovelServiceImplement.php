@@ -429,7 +429,7 @@
                     'message' => [
                         [
                             'text' => 'Registrado con éxito',
-                            'detail' => $asociado // Aquí corregí la referencia a $novel
+                            'detail' => 'Haz completado correctamente toda la información requerida, ya puedes usar todas las funcionlaidades de la app.',
                         ]
                     ]
                 ], Response::HTTP_OK);
