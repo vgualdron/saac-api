@@ -388,8 +388,10 @@
 
         function completeDataSaac(Request $request) {
             try {
-                // Excluir datos no necesarios para la tabla principal
-                // $datosAsociado = $request->except(['economicas', 'activos', 'conocimientos', 'referencias', 'aportes']);
+                // Ver datos recibidos
+                // dd($request->all());
+
+                // Extraer datos del request
                 $datosAsociado = $request->input('asociado', []);
 
                 // Iniciar transacción
@@ -402,21 +404,20 @@
                 $relaciones = ['economicas', 'activos', 'conocimientos', 'referencias'];
 
                 foreach ($relaciones as $relacion) {
-                    if ($request->has($relacion) && !empty($request->$relacion)) {
+                    if ($request->filled($relacion)) { // Cambié has() por filled()
                         $asociado->$relacion()->create($request->$relacion);
                     }
                 }
 
                 // Guardar los aportes
-                if ($request->aportes) {
-                    foreach ($request->aportes as $aporte) {
-                        if (!empty($aporte['valor_aporte']) && $aporte['valor_aporte'] > 0) {
-                            AsociadoAporte::create([
-                                'asociado_id' => $asociado->id,
-                                'lineaaporte_id' => $aporte['linea_aporte_id'],
-                                'valor_aporte' => $aporte['valor_aporte'],
-                            ]);
-                        }
+                $aportes = $request->input('aportes', []);
+                foreach ($aportes as $aporte) {
+                    if (!empty($aporte['valor_aporte']) && $aporte['valor_aporte'] > 0) {
+                        AsociadoAporte::create([
+                            'asociado_id' => $asociado->id,
+                            'lineaaporte_id' => $aporte['linea_aporte_id'],
+                            'valor_aporte' => $aporte['valor_aporte'],
+                        ]);
                     }
                 }
 
@@ -426,8 +427,8 @@
                 return response()->json([
                     'message' => [
                         [
-                            'text' => 'Registrado con exito',
-                            'detail' => $asociado
+                            'text' => 'Registrado con éxito',
+                            'detail' => $asociado // Aquí corregí la referencia a $novel
                         ]
                     ]
                 ], Response::HTTP_OK);
