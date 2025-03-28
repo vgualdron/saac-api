@@ -141,7 +141,7 @@
                                 $novelObject = Novel::from('saacccgq_mobile_database.news as n')
                                     ->select(
                                         'n.*',
-                                        'muni_exp.departamento_id as dptp_exp',
+                                        'muni_exp.departamento_id as dpto_exp',
                                     )
                                     ->join('saacccgq_dbsaac.municipios muni_exp', 'muni_exp.id', 'n.city_issue')
                                     ->where('n.user_id', $user->id)
