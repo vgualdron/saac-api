@@ -49,12 +49,7 @@ class NovelController extends Controller
     }
 
     function completeDataSaac() {
-        return response()->json([
-            'data' => null,
-            'message' => 'Succeed'
-        ], JsonResponse::HTTP_OK);
-        // dd($this->request->all());
-        // return $this->service->completeDataSaac($request);
+        return $this->service->completeDataSaac($this->$request);
     }
 
     function delete(int $id){

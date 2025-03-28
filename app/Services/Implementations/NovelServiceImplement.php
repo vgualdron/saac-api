@@ -9,6 +9,7 @@
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\DB;
+    use Illuminate\Http\Request;
 
     class NovelServiceImplement implements NovelServiceInterface {
 
