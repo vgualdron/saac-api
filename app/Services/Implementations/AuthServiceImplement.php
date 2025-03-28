@@ -140,10 +140,14 @@
 
                                 $novelObject = Novel::select(
                                         'n.*',
-                                        'muni_exp.departamento_id as dpto_exp'
+                                        'muni_exp.departamento_id as dpto_exp',
+                                        'muni_birth.departamento_id as dpto_birth',
+                                        'muni_house.departamento_id as dpto_house',
                                     )
                                     ->from('saacccgq_mobile_database.news as n')
                                     ->join('saacccgq_dbsaac.municipios as muni_exp', 'muni_exp.id', '=', 'n.city_issue')
+                                    ->join('saacccgq_dbsaac.municipios as muni_birth', 'muni_birth.id', '=', 'n.city_id')
+                                    ->join('saacccgq_dbsaac.municipios as muni_house', 'muni_house.id', '=', 'n.city_house')
                                     ->where('n.user_id', $user->id)
                                     ->first();
 
