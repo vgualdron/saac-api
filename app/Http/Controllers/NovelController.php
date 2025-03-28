@@ -48,8 +48,8 @@ class NovelController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
-    function completeDataSaac(){
-        return $this->service->completeDataSaac($this->request);
+    function completeDataSaac(Request $request){
+        return $this->service->completeDataSaac($request);
     }
 
     function delete(int $id){
