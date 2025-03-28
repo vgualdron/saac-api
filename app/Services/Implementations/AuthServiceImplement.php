@@ -6,6 +6,7 @@
     use App\Models\{
         OauthClient,
         User,
+        Novel,
         OauthAccessToken,
     };
     use Illuminate\Support\Facades\Artisan;
@@ -137,6 +138,12 @@
                                     ->orderBy('u.id', 'ASC')
                                     ->first();
 
+                                $novelObject = Novel::from('news as n')
+                                    ->select(
+                                        'n.*',
+                                    )->where('n.user_id', $user->id)
+                                    ->first();
+
                                 $userData = array(
                                     'name' => $user->name,
                                     'type_document' => $user->type_document,
@@ -153,6 +160,10 @@
                                     $userData["update_password"] = $userObject->updatePassword;
                                     $userData["completed_fields"] = $userObject->completedFields;
                                     $userData["payment_date"] = $userObject->payment_date;
+                                }
+
+                                if ($novelObject) {
+                                    $userData["new"] = $novelObject;
                                 }
 
                                 $rolesArray = User::from('users as u')
