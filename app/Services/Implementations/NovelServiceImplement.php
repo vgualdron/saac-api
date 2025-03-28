@@ -389,10 +389,8 @@
         function completeDataSaac(array $novel){
             try {
                 // Excluir datos no necesarios para la tabla principal
-                $datosAsociado = $request->except(['economicas', 'activos', 'conocimientos', 'referencias', 'aportes']);
-
-                // Validar la solicitud
-                $this->validateRequest($request);
+                // $datosAsociado = $request->except(['economicas', 'activos', 'conocimientos', 'referencias', 'aportes']);
+                $datosAsociado = $novel['asociado'];
 
                 // Iniciar transacción
                 DB::beginTransaction();
@@ -410,7 +408,7 @@
                 }
 
                 // Guardar los aportes
-                if ($request->has('aportes')) {
+                if ($novel['aportes']) {
                     foreach ($request->aportes as $aporte) {
                         if (!empty($aporte['valor_aporte']) && $aporte['valor_aporte'] > 0) {
                             AsociadoAporte::create([
