@@ -386,11 +386,11 @@
             }
         }
 
-        function completeDataSaac(Request $request){
+        function completeDataSaac(Request $request) {
             try {
                 // Excluir datos no necesarios para la tabla principal
                 // $datosAsociado = $request->except(['economicas', 'activos', 'conocimientos', 'referencias', 'aportes']);
-                $datosAsociado = $novel['asociado'];
+                $datosAsociado = $request->asociado;
 
                 // Iniciar transacción
                 DB::beginTransaction();
