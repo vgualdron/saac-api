@@ -48,7 +48,8 @@ class NovelController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
-    function completeDataSaac(Request $request){
+    function completeDataSaac(Request $request) {
+        dd($request->all());
         return $this->service->completeDataSaac($request);
     }
 

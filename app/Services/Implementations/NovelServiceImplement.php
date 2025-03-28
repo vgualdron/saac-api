@@ -390,7 +390,7 @@
             try {
                 // Excluir datos no necesarios para la tabla principal
                 // $datosAsociado = $request->except(['economicas', 'activos', 'conocimientos', 'referencias', 'aportes']);
-                $datosAsociado = $request->asociado;
+                $datosAsociado = $request->input('asociado', []);
 
                 // Iniciar transacción
                 DB::beginTransaction();
@@ -427,7 +427,7 @@
                     'message' => [
                         [
                             'text' => 'Registrado con exito',
-                            'detail' => $novel
+                            'detail' => $asociado
                         ]
                     ]
                 ], Response::HTTP_OK);
