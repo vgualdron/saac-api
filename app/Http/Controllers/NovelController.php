@@ -49,7 +49,7 @@ class NovelController extends Controller
     }
 
     function completeDataSaac() {
-        return $this->service->completeDataSaac($this->$request);
+        return $this->service->completeDataSaac($this->request);
     }
 
     function delete(int $id){
