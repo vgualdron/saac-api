@@ -50,7 +50,7 @@ class NovelController extends Controller
 
     function completeDataSaac(Request $request) {
         dd($request->all());
-        return $this->service->completeDataSaac($request);
+        // return $this->service->completeDataSaac($request);
     }
 
     function delete(int $id){
