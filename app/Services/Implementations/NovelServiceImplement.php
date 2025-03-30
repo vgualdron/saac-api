@@ -430,7 +430,7 @@
                     'message' => [
                         [
                             'text' => 'Registrado con éxito',
-                            'detail' => 'Haz completado correctamente toda la información requerida, ya puedes usar todas las funcionlaidades de la app.',
+                            'detail' => 'Haz completado correctamente toda la información requerida, ya puedes usar todas las funcionalidades de la app.',
                         ]
                     ]
                 ], Response::HTTP_OK);
