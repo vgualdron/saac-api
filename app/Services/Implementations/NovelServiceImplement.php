@@ -5,6 +5,7 @@
     use App\Models\Novel;
     use App\Models\User;
     use App\Models\Asociado;
+    use App\Models\AsociadoAporte;
     use App\Validator\{NovelValidator, ProfileValidator};
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
