@@ -17,7 +17,7 @@ class CollectionController extends Controller
         $this->service = $service;
     }
 
-    function list(String $document){
+    function list(String $document) {
         return $this->service->list($document);
     }
 }

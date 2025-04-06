@@ -13,22 +13,17 @@ use App\Models\Asociado;
 use App\Models\MovimientoCobro;
 use App\Models\MovimientoRecaudo;
 use App\Models\MovimientoCredito;
-use App\Services\SmsService;
 
 class StatementController extends Controller
 {
-    protected $smsService;
-
-    public function __construct(SmsService $smsService) {
-        $this->smsService = $smsService;
-    }
 
     /**
      * Obtiene cobros y recaudos pendientes y realizados de un asociado específico.
      */
     public function get(string $document)
     {
-        $response = $this->smsService->sendSimpleSms(['573043427319'], 'La persona con cedula'. $document . ' está revisando el estado de cuenta.');
+        $this->logAction('get', 'statement', null);
+        $this->sendSimpleSms(['573043427319'], 'La persona con cedula '. $document . ' está revisando el estado de cuenta.');
         $asociadoId = null;
         $asociado = Asociado::where('cedula', $document)->first();
         // dd($asociado);

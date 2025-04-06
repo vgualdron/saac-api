@@ -19,7 +19,8 @@ class PointController extends Controller
         return $this->service->list($status);
     }
 
-    function listByUserSession(string $status){
+    function listByUserSession(string $status) {
+        $this->logAction('listByUserSession', 'point', null);
         $idUserSesion = $this->request->user()->id;
         return $this->service->listByUserSession($status, $idUserSesion);
     }

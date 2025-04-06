@@ -31,6 +31,7 @@ class PqrController extends Controller
             ];
 
             Mail::to('cooperativacoopserprog@gmail.com')->send(new PqrEmail($data));
+            $this->logAction('create', 'pqr', null);
 
             return response()->json([
                 'message' => [

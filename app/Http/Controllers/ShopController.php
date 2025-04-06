@@ -20,7 +20,8 @@ class ShopController extends Controller
     function list(){
         return $this->service->list();
     }
-    function listByStatus(string $status){
+    function listByStatus(string $status) {
+        $this->logAction('listByStatus', 'shop', null);
         return $this->service->listByStatus($status);
     }
 
