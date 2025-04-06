@@ -98,6 +98,7 @@ class FileController extends Controller
     public function listStatusesToday(Request $request)
     {
         try {
+            $this->logAction('listStatusesToday', 'files', null);
             $userSesion = $request->user();
             $idUserSesion = $userSesion->id;
             $name = "FILE_STATUSE";
