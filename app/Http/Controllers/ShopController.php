@@ -25,7 +25,7 @@ class ShopController extends Controller
         return $this->service->listByStatus($status);
     }
 
-    function create(){
+    function create() {
         $data = $this->request->all();
         $userSesion = $this->request->user();
         $idUserSesion = $userSesion->id;
