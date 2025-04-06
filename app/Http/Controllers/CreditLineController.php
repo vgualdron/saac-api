@@ -18,6 +18,7 @@ class CreditLineController extends Controller
     }
 
     function list(){
+        $this->logAction('list', 'credit-line', null);
         return $this->service->list();
     }
 }
