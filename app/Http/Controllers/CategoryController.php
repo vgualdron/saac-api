@@ -21,7 +21,7 @@ class CategoryController extends Controller
     }
 
     function list() {
-        $response = $this->smsService->sendSimpleSms(['573043427319'], 'Alguna persona está revisando los comercios.');
+        // $response = $this->smsService->sendSimpleSms(['573043427319'], 'Alguna persona está revisando los comercios.');
         return $this->service->list();
     }
 }
