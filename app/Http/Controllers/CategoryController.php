@@ -22,6 +22,7 @@ class CategoryController extends Controller
 
     function list() {
         // $response = $this->smsService->sendSimpleSms(['573043427319'], 'Alguna persona está revisando los comercios.');
+        $this->logAction('Listó los comercios', 'shops', null);
         return $this->service->list();
     }
 }
