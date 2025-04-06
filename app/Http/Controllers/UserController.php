@@ -13,8 +13,8 @@ class UserController extends Controller
     private $request;
 
     public function __construct(Request $request, UserServiceImplement $service) {
-            $this->request = $request;
-            $this->service = $service;
+        $this->request = $request;
+        $this->service = $service;
     }
 
     function list(int $displayAll){
