@@ -35,8 +35,6 @@
                         'emp.nombre as company_name',
                         'muni_exp.departamento_id as dpto_exp_id',
                         'muni_exp.nombre as muni_exp_name',
-                        'muni_exp.departamento_id as dpto_exp_id',
-                        'muni_exp.nombre as muni_exp_name',
                         'muni_birth.departamento_id as dpto_birth_id',
                         'muni_birth.nombre as muni_birth_name',
                         'muni_house.departamento_id as dpto_house_id',
