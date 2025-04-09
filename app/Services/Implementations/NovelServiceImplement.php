@@ -29,14 +29,27 @@
         function list(string $status) {
             try {
                 $explodeStatus = explode(',', $status);
-                $sql = $this->novel->from('news as n')
+                $sql = $this->novel->from('saacccgq_mobile_database.news as n')
                     ->select(
                         'n.*',
+                        'emp.nombre as company_name',
+                        'muni_exp.departamento_id as dpto_exp_id',
+                        'muni_exp.nombre as muni_exp_name',
+                        'muni_exp.departamento_id as dpto_exp_id',
+                        'muni_exp.nombre as muni_exp_name',
+                        'muni_birth.departamento_id as dpto_birth_id',
+                        'muni_birth.nombre as muni_birth_name',
+                        'muni_house.departamento_id as dpto_house_id',
+                        'muni_house.nombre as muni_house_name',
                         'u.id as user_id',
                         'u.completedFields as user_completed_fields',
                         'u.payment_date as user_payment_date',
                     )
-                    ->leftJoin('users as u', 'u.id', 'n.user_id')
+                    ->leftJoin('saacccgq_mobile_database.users as u', 'u.id', 'n.user_id')
+                    ->join('saacccgq_dbsaac.empresas as emp', 'emp.id', '=', 'n.company_id')
+                    ->join('saacccgq_dbsaac.municipios as muni_exp', 'muni_exp.id', '=', 'n.city_issue')
+                    ->join('saacccgq_dbsaac.municipios as muni_birth', 'muni_birth.id', '=', 'n.city_id')
+                    ->join('saacccgq_dbsaac.municipios as muni_house', 'muni_house.id', '=', 'n.city_house')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('n.status', $explodeStatus);
                     })
