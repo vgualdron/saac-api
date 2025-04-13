@@ -152,3 +152,11 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/point"], function () {
     Route::delete('/{id}', [PointController::class, 'delete'])->name('point.delete');
     Route::get('/{id}', [PointController::class, 'get'])->name('point.get');
 });
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/credit"], function () {
+    Route::get('/{status}', [CreditController::class, 'list'])->name('credit.list');
+    Route::post('/', [CreditController::class, 'create'])->name('credit.create');
+    Route::put('/{id}', [CreditController::class, 'update'])->name('credit.update');
+    Route::delete('/{id}', [CreditController::class, 'delete'])->name('credit.delete');
+    Route::get('/{id}', [CreditController::class, 'get'])->name('credit.get');
+});
