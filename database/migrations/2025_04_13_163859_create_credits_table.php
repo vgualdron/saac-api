@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('status', 20);
             $table->unsignedBigInteger('created_by');
             $table->string('otp', 6);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->timestamps();
         });
     }
